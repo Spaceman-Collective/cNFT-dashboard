@@ -1,26 +1,13 @@
 import Dashboard from "@/components/Dashboard";
 import ThemeToggle from "@/components/ThemeToggle";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DateRangePicker } from "@/components/DateRangePicker";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { account } from "@/lib/uris";
-import { truncateKey } from "@/lib/utils";
-import { ExternalLinkIcon } from "lucide-react";
 import { fetchWallets } from "@/lib/api";
+import { columns } from "./wallets/columns";
+import { DataTable } from "@/components/ui/data-table";
 
 export default async function Home() {
-  // const { from, to } = useDateRangeStore.getState().dateRange;
-  const wallets = await fetchWallets();
-  console.log(wallets);
+  const data = await fetchWallets();
 
   return (
     <main className="flex flex-col min-h-screen p-8">
@@ -38,39 +25,7 @@ export default async function Home() {
             <CardTitle>Top Accounts</CardTitle>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">Account</TableHead>
-                  <TableHead>SOL Balance</TableHead>
-                  <TableHead># Minted (BGUM)</TableHead>
-                  <TableHead># Transferred (BGUM)</TableHead>
-                  <TableHead># Burned (BGUM)</TableHead>
-                  <TableHead># Minted (CM)</TableHead>
-                  <TableHead># Minted (CM)</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {wallets.map(({ wallet: pk, ...wallet }) => (
-                  <TableRow key={pk}>
-                    <TableCell className="flex items-center w-[250px]">
-                      <span className="font-mono">{truncateKey(pk)}</span>
-
-                      <Button variant="link" asChild>
-                        <a href={account(pk)} target="_blank">
-                          <ExternalLinkIcon size={20} />
-                        </a>
-                      </Button>
-                    </TableCell>
-                    <TableCell>{wallet.sol}</TableCell>
-                    <TableCell>{wallet.bgumMint}</TableCell>
-                    <TableCell>{wallet.bgumTransfer}</TableCell>
-                    <TableCell>{wallet.bgumBurn}</TableCell>
-                    <TableCell>{wallet.cmMints}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <DataTable columns={columns} data={data} />
           </CardContent>
         </Card>
 
