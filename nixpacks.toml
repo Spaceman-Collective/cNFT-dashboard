@@ -1,2 +1,8 @@
 [phases.install]
 cmds=["bun install"]
+
+[phases.build]
+cmds=["bunx next build"]
+
+[phases.start]
+cmds=["bunx next start"]
