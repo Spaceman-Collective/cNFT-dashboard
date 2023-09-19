@@ -1,2 +1,5 @@
+[phases.setup]
+nixPkgs = ['nodejs_18']
+
 [phases.install]
-cmds=["bun install"]
+cmds=["npm install"]
