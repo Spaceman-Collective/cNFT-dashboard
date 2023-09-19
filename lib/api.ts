@@ -11,10 +11,15 @@ export type Wallet = {
   cmMints: number;
 };
 
-export async function fetchWallets(): Promise<Wallet[]> {
-  const res = await fetch(process.env.WALLETS_API_URL ?? "");
-  if (!res.ok) {
-    throw new Error(res.statusText);
-  }
-  return await res.json();
+export function fetchWallets(): Promise<Wallet[]> {
+  return fetch(process.env.WALLETS_API_URL ?? "", {
+    cache: "no-cache",
+    headers: { "Content-Type": "application/json" },
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error(res.statusText);
+    }
+
+    return res.json();
+  });
 }
