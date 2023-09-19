@@ -4,7 +4,6 @@ export type Wallet = {
   bgumTransfer: number;
   bgumBurn: number;
   sol: number;
-  tokens: any;
   tensorIX: number;
   meIX: number;
   sharkyIX: number;
@@ -12,12 +11,11 @@ export type Wallet = {
   cmMints: number;
 };
 
-export function fetchWallets(): Promise<Wallet[]> {
-  return fetch(process.env.WALLETS_API_URL ?? "").then((res) => {
-    if (!res.ok) {
-      throw new Error(res.statusText);
-    }
-
-    return res.json();
-  });
+export async function fetchWallets(): Promise<Wallet[]> {
+  const res = await fetch(process.env.WALLETS_API_URL ?? "");
+  if (!res.ok) {
+    throw new Error(res.statusText);
+  }
+  console.log(await res.json());
+  return await res.json();
 }

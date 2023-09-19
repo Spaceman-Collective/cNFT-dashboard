@@ -20,6 +20,7 @@ import { fetchWallets } from "@/lib/api";
 export default async function Home() {
   // const { from, to } = useDateRangeStore.getState().dateRange;
   const wallets = await fetchWallets();
+  console.log(wallets);
 
   return (
     <main className="flex flex-col min-h-screen p-8">
@@ -66,7 +67,6 @@ export default async function Home() {
                     <TableCell>{wallet.bgumTransfer}</TableCell>
                     <TableCell>{wallet.bgumBurn}</TableCell>
                     <TableCell>{wallet.cmMints}</TableCell>
-                    <TableCell>{JSON.stringify(wallet.tokens)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
