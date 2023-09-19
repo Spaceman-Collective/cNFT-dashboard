@@ -16,6 +16,5 @@ export async function fetchWallets(): Promise<Wallet[]> {
   if (!res.ok) {
     throw new Error(res.statusText);
   }
-  console.log(await res.json());
   return await res.json();
 }
